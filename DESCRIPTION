@@ -16,4 +16,6 @@ Suggests:
     readr,
     scales,
     stringr,
-    tidyr
+    tidyr,
+    magrittr
+RoxygenNote: 7.1.2
