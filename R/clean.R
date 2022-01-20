@@ -11,7 +11,12 @@ clean_measurement <- function(time_path, energy_path) {
                                 show_col_types = FALSE)
 
   time_df <- clean_time_measurement(time_raw)
-  energy_df <- clean_energy_measurement(energy_raw, time_df)
+
+  if ("graphic" $in$ colnames(energy_raw)) {
+    energy_df <- clean_energy_measurement_v2(energy_raw, time_df)
+  } else {
+    energy_df <- clean_energy_measurement(energy_raw, time_df)
+  }
 
   list("time" = time_df,
        "energy" = energy_df,

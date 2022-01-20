@@ -18,6 +18,31 @@ clean_energy_measurement <- function(df, df_time) {
     dplyr::mutate(energy_avg = power_avg * time_avg / 1e3)
 }
 
+#' Updated Version of energy measurement cleaning with more captured variables
+#' Accounts for measurements on different clock speeds.
+#'
+#' @param df Data frame containing raw energy data from measurement script
+#' @param df_time Data frame with processed time data for energy calculation
+#'
+#' @export
+clean_energy_measurement_v2 <- function(df, df_time) {
+  df %>%
+    dplyr::group_by(problem_size, memory, graphic, rep_id) %>%
+    dplyr::summarise(power_avg = mean(power),
+                     temp_max = max(temp),
+                     temp_avg = mean(temp),
+                     g_clock_avg = mean(graphic_clock),
+                     m_clock_avg = mean(memory_clock),
+                     util_min = min(utilization),
+                     util_avg = mean(utilization)
+                     ) %>%
+    dplyr::group_by(problem_size, memory, graphic) %>%
+    dplyr::summarise(dplyr::across(power_avg:util_avg, mean)) %>%
+    dplyr::left_join(df_time, by = "problem_size") %>%
+    dplyr::select(-(exec_time_avg:cpu_init_avg)) %>%
+    dplyr::mutate(energy_avg = power_avg * time_avg / 1e3)
+}
+
 
 #' Transform raw energy measurements into a tidy tibble for further analysis
 #'
