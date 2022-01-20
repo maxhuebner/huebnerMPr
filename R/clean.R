@@ -12,7 +12,7 @@ clean_measurement <- function(time_path, energy_path) {
 
   time_df <- clean_time_measurement(time_raw)
 
-  if ("graphic" $in$ colnames(energy_raw)) {
+  if ("graphic" %in% colnames(energy_raw)) {
     energy_df <- clean_energy_measurement_v2(energy_raw, time_df)
   } else {
     energy_df <- clean_energy_measurement(energy_raw, time_df)

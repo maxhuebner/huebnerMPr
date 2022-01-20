@@ -32,7 +32,7 @@ clean_energy_measurement_v2 <- function(df, df_time) {
                      temp_max = max(temp),
                      temp_avg = mean(temp),
                      g_clock_avg = mean(graphic_clock),
-                     m_clock_avg = mean(memory_clock),
+                     m_clock_avg = mean(mem_clock),
                      util_min = min(utilization),
                      util_avg = mean(utilization)
                      ) %>%
