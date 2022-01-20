@@ -10,11 +10,13 @@ clean_measurement <- function(time_path, energy_path) {
   energy_raw <- readr::read_csv(energy_path,
                                 show_col_types = FALSE)
 
-  time_df <- clean_time_measurement(time_raw)
+
 
   if ("graphic" %in% colnames(energy_raw)) {
+    time_df <- clean_time_measurement_v2(time_raw)
     energy_df <- clean_energy_measurement_v2(energy_raw, time_df)
   } else {
+    time_df <- clean_time_measurement(time_raw)
     energy_df <- clean_energy_measurement(energy_raw, time_df)
   }
 

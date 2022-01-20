@@ -38,7 +38,8 @@ clean_energy_measurement_v2 <- function(df, df_time) {
                      ) %>%
     dplyr::group_by(problem_size, memory, graphic) %>%
     dplyr::summarise(dplyr::across(power_avg:util_avg, mean)) %>%
-    dplyr::left_join(df_time, by = "problem_size") %>%
+    dplyr::left_join(df_time,
+                     by = c("problem_size", "memory", "graphic")) %>%
     dplyr::select(-(exec_time_avg:cpu_init_avg)) %>%
     dplyr::mutate(energy_avg = power_avg * time_avg / 1e3)
 }
