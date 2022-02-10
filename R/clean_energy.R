@@ -14,6 +14,7 @@ clean_energy_measurement <- function(df, df_time) {
               time = max(time)) %>%
     dplyr::summarise(dplyr::across(power_avg:util_avg, mean)) %>%
     dplyr::left_join(df_time, by = "problem_size") %>%
+    dplyr::mutate(exec_time_avg=0,cpu_init_avg=0) %>%
     dplyr::select(-(exec_time_avg:cpu_init_avg)) %>%
     dplyr::mutate(energy_avg = power_avg * time_avg / 1e3)
 }
@@ -40,6 +41,7 @@ clean_energy_measurement_v2 <- function(df, df_time) {
     dplyr::summarise(dplyr::across(power_avg:util_avg, mean)) %>%
     dplyr::left_join(df_time,
                      by = c("problem_size", "memory", "graphic")) %>%
+    dplyr::mutate(exec_time_avg=0,cpu_init_avg=0) %>%
     dplyr::select(-(exec_time_avg:cpu_init_avg)) %>%
     dplyr::mutate(energy_avg = power_avg * time_avg / 1e3)
 }
