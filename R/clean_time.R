@@ -16,7 +16,11 @@ clean_time_measurement <- function(df) {
   if ("time_avg" %in% colnames(temp_df)) {
     temp_df <- temp_df %>%
       dplyr::rename(exec_time_avg = time_avg, time_avg = time_cuda_avg)
+  } else {
+    temp_df <- temp_df %>%
+      dplyr::rename(time_avg = time_cuda_avg)
   }
+
   temp_df %>%
     dplyr::relocate(time_avg, .after = problem_size) %>%
     dplyr::mutate(time_avg = time_avg / 1e3) %>%
@@ -42,6 +46,9 @@ clean_time_measurement_v2 <- function(df) {
   if ("time_avg" %in% colnames(temp_df)) {
     temp_df <- temp_df %>%
       dplyr::rename(exec_time_avg = time_avg, time_avg = time_cuda_avg)
+  } else {
+    temp_df <- temp_df %>%
+      dplyr::rename(time_avg = time_cuda_avg)
   }
 
   temp_df %>%
